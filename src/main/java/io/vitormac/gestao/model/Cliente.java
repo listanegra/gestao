@@ -54,6 +54,10 @@ public class Cliente implements Serializable {
         this.id = id;
     }
     
+    public boolean isDocumentoValido() {
+        return this.documento.matches("^[0-9]*$");
+    }
+    
     @Override
     public String toString() {
         return String.format("%s - Documento: %s", this.nome, this.documento);

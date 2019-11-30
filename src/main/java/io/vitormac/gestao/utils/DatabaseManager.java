@@ -1,4 +1,4 @@
-package io.vitormac.gestao;
+package io.vitormac.gestao.utils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

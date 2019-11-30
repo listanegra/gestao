@@ -1,6 +1,6 @@
 package io.vitormac.gestao.controller;
 
-import io.vitormac.gestao.DatabaseManager;
+import io.vitormac.gestao.utils.DatabaseManager;
 import io.vitormac.gestao.model.Cliente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +28,7 @@ public class CadastroClienteController {
     @FXML
     public void incluirCliente(ActionEvent event) {
         Cliente cliente = new Cliente(this.txtNome.getText(), this.txtDocumento.getText());
-        if (!this.hasCliente(cliente)) {
+        if (!this.hasCliente(cliente) && cliente.isDocumentoValido()) {
             EntityTransaction transaction = manager.getTransaction();
 
             transaction.begin();
@@ -38,6 +38,8 @@ public class CadastroClienteController {
             Node source = (Node) event.getSource();
             ((Stage) source.getScene().getWindow()).close();
             new Alert(Alert.AlertType.INFORMATION, "Cliente cadastrado com sucesso!").showAndWait();
+        } else if (!cliente.isDocumentoValido()) {
+            new Alert(Alert.AlertType.WARNING, "Documento informado é inválido!").showAndWait();
         } else {
             new Alert(Alert.AlertType.WARNING, "Cliente já cadastrado!").showAndWait();
         }

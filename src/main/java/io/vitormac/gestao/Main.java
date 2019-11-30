@@ -1,8 +1,7 @@
 package io.vitormac.gestao;
 
-import io.vitormac.gestao.registry.PaneRegistry;
+import io.vitormac.gestao.utils.SceneLoader;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -20,7 +19,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setScene(new Scene(PaneRegistry.forName("main")));
+        primaryStage.setScene(SceneLoader.loadScene("main"));
         primaryStage.show();
     }
     

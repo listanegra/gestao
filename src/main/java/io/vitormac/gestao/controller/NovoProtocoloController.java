@@ -1,6 +1,6 @@
 package io.vitormac.gestao.controller;
 
-import io.vitormac.gestao.DatabaseManager;
+import io.vitormac.gestao.utils.DatabaseManager;
 import io.vitormac.gestao.model.Cliente;
 import java.net.URL;
 import java.util.List;
