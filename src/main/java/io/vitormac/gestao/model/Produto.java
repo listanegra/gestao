@@ -1,16 +1,19 @@
 package io.vitormac.gestao.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author vitor
  */
 @Entity
+@NamedQuery(name = "Produto.listarProdutos", query = "SELECT p FROM Produto p")
 public class Produto implements Serializable {
 
     @Id
@@ -19,6 +22,8 @@ public class Produto implements Serializable {
 
     private String nome;
     private String marca;
+    
+    @Column(nullable = true)
     private String descricao;
 
     public Produto() {
@@ -60,6 +65,11 @@ public class Produto implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%s - Marca: %s", this.nome, this.marca);
     }
 
 }

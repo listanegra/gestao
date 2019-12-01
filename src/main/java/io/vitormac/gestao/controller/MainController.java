@@ -1,5 +1,6 @@
 package io.vitormac.gestao.controller;
 
+import io.vitormac.gestao.controller.model.IGestaoController;
 import io.vitormac.gestao.utils.DatabaseManager;
 import io.vitormac.gestao.utils.SceneUtils;
 import java.io.IOException;
@@ -32,12 +33,20 @@ public class MainController implements Initializable {
 
     @FXML
     private void abrirGestaoClientes(ActionEvent event) throws IOException {
-        FXMLLoader loader = SceneUtils.getLoader("gestao_clientes");
-        Stage stage = SceneUtils.createDialog(SceneUtils.loadScene(loader), "Gestão de clientes");
-        GestaoClienteController controller = loader.getController();
-        
+        this.criarDialogGestao("gestao_clientes", "Gestão de clientes").showAndWait();
+    }
+    
+    @FXML
+    private void abrirGestaoProdutos(ActionEvent event) throws IOException {
+        this.criarDialogGestao("gestao_produtos", "Gestão de Produtos").showAndWait();
+    }
+    
+    private Stage criarDialogGestao(String name, String title) throws IOException {
+        FXMLLoader loader = SceneUtils.getLoader(name);
+        Stage stage = SceneUtils.createDialog(SceneUtils.loadScene(loader), title);
+        IGestaoController controller = loader.getController();
         stage.setOnCloseRequest(controller::confirmaAlteracao);
-        stage.showAndWait();
+        return stage;
     }
 
 }

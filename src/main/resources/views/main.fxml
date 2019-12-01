@@ -16,6 +16,7 @@
           <Menu mnemonicParsing="false" text="Arquivo">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#abrirGestaoClientes" text="Gestão de clientes" />
+                  <MenuItem mnemonicParsing="false" onAction="#abrirGestaoProdutos" text="Gestão de produtos" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">

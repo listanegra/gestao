@@ -13,7 +13,7 @@
       <Label layoutX="14.0" layoutY="54.0" text="Documento:" AnchorPane.leftAnchor="14.0" />
       <TextField fx:id="txtNome" layoutX="437.0" layoutY="19.0" prefHeight="25.0" prefWidth="526.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
       <TextField fx:id="txtDocumento" layoutX="93.0" layoutY="52.0" prefHeight="25.0" prefWidth="296.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="50.0" />
-      <Button layoutX="8.0" layoutY="87.0" mnemonicParsing="false" onAction="#incluirCliente" prefHeight="25.0" prefWidth="378.0" text="Incluir" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+      <Button layoutX="8.0" layoutY="87.0" mnemonicParsing="false" onAction="#action" prefHeight="25.0" prefWidth="378.0" text="Incluir" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
       <RadioButton fx:id="pessoaJuridica" layoutX="246.0" layoutY="93.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="140.0" text="Jurídica" AnchorPane.rightAnchor="14.0">
          <toggleGroup>
             <ToggleGroup fx:id="pessoaGroup" />
