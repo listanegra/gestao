@@ -73,6 +73,14 @@ public abstract class ClientePessoa implements Serializable {
         this.tipoPessoa = tipoPessoa;
     }
 
+    public String getMensagemAlerta() {
+        StringBuilder builder = new StringBuilder("Documento informado é inválido!");
+            builder.append('\n').append("Formato esperado para pessoa ")
+                    .append(this.getTipoPessoa().name()).append(':').append('\n')
+                    .append(this.getFormatoDocumento()).append(" (apenas números)");
+        return builder.toString();
+    }
+    
     public abstract boolean isDocumentoValido();
     
     public abstract String getFormatoDocumento();

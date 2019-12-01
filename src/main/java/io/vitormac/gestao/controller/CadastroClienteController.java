@@ -50,16 +50,11 @@ public class CadastroClienteController {
 
             Node source = (Node) event.getSource();
             ((Stage) source.getScene().getWindow()).close();
-            new Alert(Alert.AlertType.INFORMATION, "Cliente cadastrado com sucesso!").showAndWait();
+            this.criarAlerta(Alert.AlertType.INFORMATION, "Cliente cadastrado com sucesso!").showAndWait();
         } else if (!cliente.isDocumentoValido()) {
-            StringBuilder builder = new StringBuilder("Documento informado é inválido!");
-            builder.append('\n').append("Formato esperado para pessoa ")
-                    .append(cliente.getTipoPessoa().name()).append(':').append('\n')
-                    .append(cliente.getFormatoDocumento()).append(" (apenas números)");
-            
-            new Alert(Alert.AlertType.WARNING, builder.toString()).showAndWait();
+            this.criarAlerta(Alert.AlertType.WARNING, cliente.getMensagemAlerta()).showAndWait();
         } else {
-            new Alert(Alert.AlertType.WARNING, "Cliente já cadastrado!").showAndWait();
+            this.criarAlerta(Alert.AlertType.WARNING, "Cliente já cadastrado!").showAndWait();
         }
     }
 
@@ -68,6 +63,12 @@ public class CadastroClienteController {
                 .setParameter("nome", cliente.getNome())
                 .setParameter("documento", cliente.getDocumento())
                 .getResultList().isEmpty();
+    }
+
+    private Alert criarAlerta(Alert.AlertType type, String text) {
+        Alert alert = new Alert(type, text);
+        alert.setHeaderText(null);
+        return alert;
     }
 
 }

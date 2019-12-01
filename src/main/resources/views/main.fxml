@@ -13,9 +13,9 @@
    <children>
       <MenuBar prefHeight="25.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Arquivo">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#cadastrarCliente" text="Cadastrar cliente" />
+              <MenuItem mnemonicParsing="false" onAction="#abrirGestaoClientes" text="Gestão de clientes" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">

@@ -1,15 +1,14 @@
 package io.vitormac.gestao.controller;
 
 import io.vitormac.gestao.utils.DatabaseManager;
-import io.vitormac.gestao.utils.SceneLoader;
+import io.vitormac.gestao.utils.SceneUtils;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.persistence.EntityManager;
 
@@ -28,20 +27,16 @@ public class MainController implements Initializable {
 
     @FXML
     private void novoProtocolo(ActionEvent event) throws IOException {
-        this.showDialog(SceneLoader.loadScene("novo_protocolo"), "Novo protocolo");
+        SceneUtils.createDialog(SceneUtils.loadScene("novo_protocolo"), "Novo protocolo").showAndWait();
     }
 
     @FXML
-    private void cadastrarCliente(ActionEvent event) throws IOException {
-        this.showDialog(SceneLoader.loadScene("cadastro_cliente"), "Novo cliente");
-    }
-
-    private void showDialog(Scene scene, String title) {
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setResizable(false);
-        stage.setTitle(title);
-        stage.setScene(scene);
+    private void abrirGestaoClientes(ActionEvent event) throws IOException {
+        FXMLLoader loader = SceneUtils.getLoader("gestao_clientes");
+        Stage stage = SceneUtils.createDialog(SceneUtils.loadScene(loader), "Gestão de clientes");
+        GestaoClienteController controller = loader.getController();
+        
+        stage.setOnCloseRequest(controller::confirmaAlteracao);
         stage.showAndWait();
     }
 

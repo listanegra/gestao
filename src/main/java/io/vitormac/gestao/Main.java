@@ -1,6 +1,6 @@
 package io.vitormac.gestao;
 
-import io.vitormac.gestao.utils.SceneLoader;
+import io.vitormac.gestao.utils.SceneUtils;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -19,7 +19,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setScene(SceneLoader.loadScene("main"));
+        primaryStage.setScene(SceneUtils.loadScene("main"));
         primaryStage.show();
     }
     
