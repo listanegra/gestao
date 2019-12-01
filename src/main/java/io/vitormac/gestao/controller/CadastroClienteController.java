@@ -1,11 +1,14 @@
 package io.vitormac.gestao.controller;
 
 import io.vitormac.gestao.utils.DatabaseManager;
-import io.vitormac.gestao.model.Cliente;
+import io.vitormac.gestao.model.ClientePessoa;
+import io.vitormac.gestao.model.ClientePessoaFisica;
+import io.vitormac.gestao.model.ClientePessoaJuridica;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.persistence.EntityManager;
@@ -26,8 +29,18 @@ public class CadastroClienteController {
     private TextField txtDocumento;
 
     @FXML
+    private RadioButton pessoaFisica, pessoaJuridica;
+
+    @FXML
     public void incluirCliente(ActionEvent event) {
-        Cliente cliente = new Cliente(this.txtNome.getText(), this.txtDocumento.getText());
+        if (pessoaFisica.isSelected()) {
+            this.cadastrar(new ClientePessoaFisica(this.txtNome.getText(), this.txtDocumento.getText()), event);
+        } else if (pessoaJuridica.isSelected()) {
+            this.cadastrar(new ClientePessoaJuridica(this.txtNome.getText(), this.txtDocumento.getText()), event);
+        }
+    }
+
+    private void cadastrar(ClientePessoa cliente, ActionEvent event) {
         if (!this.hasCliente(cliente) && cliente.isDocumentoValido()) {
             EntityTransaction transaction = manager.getTransaction();
 
@@ -39,14 +52,19 @@ public class CadastroClienteController {
             ((Stage) source.getScene().getWindow()).close();
             new Alert(Alert.AlertType.INFORMATION, "Cliente cadastrado com sucesso!").showAndWait();
         } else if (!cliente.isDocumentoValido()) {
-            new Alert(Alert.AlertType.WARNING, "Documento informado é inválido!").showAndWait();
+            StringBuilder builder = new StringBuilder("Documento informado é inválido!");
+            builder.append('\n').append("Formato esperado para pessoa ")
+                    .append(cliente.getTipoPessoa().name()).append(':').append('\n')
+                    .append(cliente.getFormatoDocumento()).append(" (apenas números)");
+            
+            new Alert(Alert.AlertType.WARNING, builder.toString()).showAndWait();
         } else {
             new Alert(Alert.AlertType.WARNING, "Cliente já cadastrado!").showAndWait();
         }
     }
 
-    private boolean hasCliente(Cliente cliente) {
-        return !this.manager.createNamedQuery("Cliente.existe", Cliente.class)
+    private boolean hasCliente(ClientePessoa cliente) {
+        return !this.manager.createNamedQuery("Cliente.existe", ClientePessoa.class)
                 .setParameter("nome", cliente.getNome())
                 .setParameter("documento", cliente.getDocumento())
                 .getResultList().isEmpty();

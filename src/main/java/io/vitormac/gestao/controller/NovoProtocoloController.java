@@ -1,7 +1,7 @@
 package io.vitormac.gestao.controller;
 
 import io.vitormac.gestao.utils.DatabaseManager;
-import io.vitormac.gestao.model.Cliente;
+import io.vitormac.gestao.model.ClientePessoa;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,7 +27,7 @@ public class NovoProtocoloController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Cliente> clientes = manager.createNamedQuery("Cliente.listarClientes", Cliente.class).getResultList();
+        List<ClientePessoa> clientes = manager.createNamedQuery("Cliente.listarClientes", ClientePessoa.class).getResultList();
         this.cbClientes.setItems(FXCollections.observableArrayList(clientes));
     }
 

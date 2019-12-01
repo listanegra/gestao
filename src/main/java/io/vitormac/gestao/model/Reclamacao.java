@@ -22,7 +22,7 @@ public class Reclamacao implements Serializable {
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY)
-    private Cliente cliente;
+    private ClientePessoa cliente;
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY)
@@ -39,11 +39,11 @@ public class Reclamacao implements Serializable {
         this.protocolo = protocolo;
     }
 
-    public Cliente getCliente() {
+    public ClientePessoa getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(ClientePessoa cliente) {
         this.cliente = cliente;
     }
 
