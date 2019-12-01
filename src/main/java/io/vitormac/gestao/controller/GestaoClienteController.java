@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -20,6 +21,7 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.StringConverter;
 import javax.persistence.EntityManager;
@@ -55,24 +57,33 @@ public class GestaoClienteController implements Initializable {
         this.documentoCol.setCellFactory(TextFieldTableCell.forTableColumn(new DocumentoConverter()));
         this.documentoCol.setCellValueFactory(new PropertyValueFactory("documento"));
         this.tipoPessoaCol.setCellValueFactory(new PropertyValueFactory("tipoPessoa"));
-        this.updateTable();
+        List<ClientePessoa> clientes = this.manager.createNamedQuery("Cliente.listarClientes", ClientePessoa.class).getResultList();
+        this.tableClientes.setItems(FXCollections.observableArrayList(clientes));
     }
 
     @FXML
     private void incluirCliente(ActionEvent event) throws IOException {
-        SceneUtils.createDialog(SceneUtils.loadScene("cadastro_cliente"), "Novo cliente").showAndWait();
-        this.updateTable();
+        FXMLLoader loader = SceneUtils.getLoader("cadastro_cliente");
+        Stage stage = SceneUtils.createDialog(SceneUtils.loadScene(loader), "Novo cliente");
+        CadastroClienteController controller = loader.getController();
+        controller.carregarClientes(this.tableClientes.getItems());
+
+        stage.setOnHiding(e -> controller.getCliente().ifPresent(cliente -> {
+            this.tableClientes.getItems().add(cliente);
+            this.pendente = true;
+        }));
+        stage.showAndWait();
     }
 
     @FXML
     private void excluirCliente(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Deseja excluir este cliente?");
+        ClientePessoa cliente = this.tableClientes.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, String.format("Deseja excluir cliente %s?", cliente.getNome()));
         alert.getButtonTypes().setAll(ButtonType.NO, ButtonType.YES);
         alert.setHeaderText(null);
 
         Optional<ButtonType> option = alert.showAndWait();
         if (option.get().equals(ButtonType.YES)) {
-            ClientePessoa cliente = this.tableClientes.getSelectionModel().getSelectedItem();
             this.tableClientes.getItems().remove(cliente);
             this.removidos.add(cliente);
             this.pendente = true;
@@ -103,11 +114,6 @@ public class GestaoClienteController implements Initializable {
                 alert.showAndWait();
             }
         }
-    }
-
-    private void updateTable() {
-        List<ClientePessoa> clientes = this.manager.createNamedQuery("Cliente.listarClientes", ClientePessoa.class).getResultList();
-        this.tableClientes.setItems(FXCollections.observableArrayList(clientes));
     }
 
     public void confirmaAlteracao(WindowEvent event) {
