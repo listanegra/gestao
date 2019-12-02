@@ -37,12 +37,17 @@ public abstract class GestaoControllerBase implements IGestaoController, Initial
 
             Optional<ButtonType> option = alert.showAndWait();
             if (option.get().equals(ButtonType.YES)) {
-                this.persistidos.forEach(this::persistir);
-                this.removidos.forEach(this::remover);
+                this.executar();
             } else if (option.get().equals(ButtonType.CANCEL)) {
                 event.consume();
             }
         }
+    }
+
+    protected void executar() {
+        this.persistidos.forEach(this::persistir);
+        this.removidos.forEach(this::remover);
+        this.pendente = false;
     }
 
     private <T extends Serializable> void persistir(T objeto) {
@@ -76,7 +81,7 @@ public abstract class GestaoControllerBase implements IGestaoController, Initial
             this.persistidos.add(item);
             this.pendente = true;
         });
-        
+
         return controller.get();
     }
 
@@ -93,7 +98,7 @@ public abstract class GestaoControllerBase implements IGestaoController, Initial
         }
         return Optional.empty();
     }
-    
+
     protected <T extends Serializable> void incluirItem(T item) {
         this.persistidos.add(item);
         this.pendente = true;

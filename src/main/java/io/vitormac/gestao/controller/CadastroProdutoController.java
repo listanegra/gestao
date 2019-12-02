@@ -31,17 +31,17 @@ public final class CadastroProdutoController extends DialogCadastroBase<Produto>
     @Override
     protected boolean validate(Produto produto) {
         if (produto.getNome().isEmpty()) {
-            this.alert("Informe o nome do produto!").showAndWait();
+            this.alert("Informe o nome do produto!");
             return false;
         }
         
         if (produto.getMarca().isEmpty()) {
-            this.alert("Informe a marca do produto!").showAndWait();
+            this.alert("Informe a marca do produto!");
             return false;
         }
         
         if (this.exists(e -> e.getNome().equals(produto.getNome()) && e.getMarca().equals(produto.getMarca()))) {
-            this.alert("Produto já cadastrado!").showAndWait();
+            this.alert("Produto já cadastrado!");
             return false;
         }
         

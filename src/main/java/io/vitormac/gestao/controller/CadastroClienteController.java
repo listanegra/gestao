@@ -37,17 +37,17 @@ public final class CadastroClienteController extends DialogCadastroBase<ClienteP
     @Override
     protected boolean validate(ClientePessoa cliente) {
         if (cliente.getNome().isEmpty()) {
-            this.alert("Informe o nome do cliente!").showAndWait();
+            this.alert("Informe o nome do cliente!");
             return false;
         }
         
         if (!cliente.isDocumentoValido()) {
-            this.alert(cliente.getMensagemAlerta()).showAndWait();
+            this.alert(cliente.getMensagemAlerta());
             return false;
         }
 
         if (this.exists(e -> e.getNome().equals(cliente.getNome()) && e.getDocumento().equals(cliente.getDocumento()))) {
-            this.alert("Cliente já cadastrado!").showAndWait();
+            this.alert("Cliente já cadastrado!");
             return false;
         }
         

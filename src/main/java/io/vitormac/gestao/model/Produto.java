@@ -1,12 +1,16 @@
 package io.vitormac.gestao.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -22,9 +26,13 @@ public class Produto implements Serializable {
 
     private String nome;
     private String marca;
-    
+
     @Column(nullable = true)
     private String descricao;
+
+    @ElementCollection
+    @OneToMany(mappedBy = "produto")
+    public List<Reclamacao> reclamacoes = new ArrayList<>();
 
     public Produto() {
     }
@@ -34,7 +42,7 @@ public class Produto implements Serializable {
         this.marca = marca;
         this.descricao = descricao;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -66,7 +74,7 @@ public class Produto implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
+
     @Override
     public String toString() {
         return String.format("%s - Marca: %s", this.nome, this.marca);

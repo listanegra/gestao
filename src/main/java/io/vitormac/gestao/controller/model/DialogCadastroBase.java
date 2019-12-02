@@ -1,5 +1,6 @@
 package io.vitormac.gestao.controller.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +14,7 @@ import javafx.stage.Stage;
  *
  * @author vitor
  */
-public abstract class DialogCadastroBase<T> {
+public abstract class DialogCadastroBase<T extends Serializable> {
 
     private T object;
     private final List<T> items = new ArrayList<>();
@@ -35,10 +36,10 @@ public abstract class DialogCadastroBase<T> {
         return this.items.stream().filter(predicate).findAny().isPresent();
     }
 
-    protected Alert alert(String text) {
+    protected void alert(String text) {
         Alert alert = new Alert(Alert.AlertType.WARNING, text);
         alert.setHeaderText(null);
-        return alert;
+        alert.showAndWait();
     }
     
     protected List<T> getItems() {

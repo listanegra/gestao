@@ -1,7 +1,10 @@
 package io.vitormac.gestao.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,13 +14,14 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author vitor
  */
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @NamedQuery(name = "Cliente.listarClientes", query = "SELECT c FROM ClientePessoa c")
 @NamedQuery(name = "Cliente.existe", query = "SELECT c FROM ClientePessoa c WHERE c.nome = :nome AND c.documento = :documento")
 public abstract class ClientePessoa implements Serializable {
@@ -31,6 +35,10 @@ public abstract class ClientePessoa implements Serializable {
     @Column(name = "tipo_pessoa")
     @Enumerated(EnumType.ORDINAL)
     private TipoPessoa tipoPessoa;
+
+    @ElementCollection
+    @OneToMany(mappedBy = "cliente")
+    public List<Reclamacao> reclamacoes = new ArrayList<>();
 
     protected ClientePessoa() {
     }
@@ -75,21 +83,21 @@ public abstract class ClientePessoa implements Serializable {
 
     public String getMensagemAlerta() {
         StringBuilder builder = new StringBuilder("Documento informado é inválido!");
-            builder.append('\n').append("Formato esperado para pessoa ")
-                    .append(this.getTipoPessoa().name()).append(':').append('\n')
-                    .append(this.getFormatoDocumento()).append(" (apenas números)");
+        builder.append('\n').append("Formato esperado para pessoa ")
+                .append(this.getTipoPessoa().name()).append(':').append('\n')
+                .append(this.getFormatoDocumento()).append(" (apenas números)");
         return builder.toString();
     }
-    
+
     public abstract boolean isDocumentoValido();
-    
+
     public abstract String getFormatoDocumento();
 
     protected abstract String formatarDocumento();
 
     @Override
     public final String toString() {
-        return String.format("%s - Documento: %s", this.nome, this.formatarDocumento());
+        return String.format("%s - Documento: %s", this.getNome(), this.formatarDocumento());
     }
 
     public enum TipoPessoa {
