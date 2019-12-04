@@ -23,7 +23,7 @@ public abstract class DialogCadastroBase<T extends Serializable> {
     
     protected abstract boolean validate(T object);
 
-    protected void doAction(T object, ActionEvent event) {
+    protected final void doAction(T object, ActionEvent event) {
         if (this.validate(object)) {
             this.object = object;
 
@@ -32,25 +32,29 @@ public abstract class DialogCadastroBase<T extends Serializable> {
         }
     }
     
-    protected boolean exists(Predicate<? super T> predicate) {
+    protected final boolean contains(T other) {
+        return this.items.contains(other);
+    }
+    
+    protected final boolean exists(Predicate<? super T> predicate) {
         return this.items.stream().filter(predicate).findAny().isPresent();
     }
 
-    protected void alert(String text) {
+    protected final void alert(String text) {
         Alert alert = new Alert(Alert.AlertType.WARNING, text);
         alert.setHeaderText(null);
         alert.showAndWait();
     }
     
-    protected List<T> getItems() {
+    protected final List<T> getItems() {
         return this.items;
     }
 
-    public void loadItems(List<T> items) {
+    public final void loadItems(List<T> items) {
         this.items.addAll(items);
     }
 
-    public Optional<T> get() {
+    public final Optional<T> get() {
         return Optional.ofNullable(this.object);
     }
     

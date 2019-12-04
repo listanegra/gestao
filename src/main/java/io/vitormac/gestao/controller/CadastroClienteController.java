@@ -46,7 +46,7 @@ public final class CadastroClienteController extends DialogCadastroBase<ClienteP
             return false;
         }
 
-        if (this.exists(e -> e.getNome().equals(cliente.getNome()) && e.getDocumento().equals(cliente.getDocumento()))) {
+        if (this.contains(cliente)) {
             this.alert("Cliente já cadastrado!");
             return false;
         }

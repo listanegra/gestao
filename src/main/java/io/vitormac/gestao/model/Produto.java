@@ -88,7 +88,7 @@ public class Produto implements Serializable {
 
         if (obj instanceof Produto) {
             Produto produto = (Produto) obj;
-            return produto.getId() == this.id;
+            return produto.getNome().equals(this.nome) && produto.getMarca().equals(this.marca);
         }
 
         return false;

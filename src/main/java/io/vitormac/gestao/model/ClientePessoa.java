@@ -23,7 +23,6 @@ import javax.persistence.OneToMany;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @NamedQuery(name = "Cliente.listarClientes", query = "SELECT c FROM ClientePessoa c")
-@NamedQuery(name = "Cliente.existe", query = "SELECT c FROM ClientePessoa c WHERE c.nome = :nome AND c.documento = :documento")
 public abstract class ClientePessoa implements Serializable {
 
     @Id
@@ -108,7 +107,7 @@ public abstract class ClientePessoa implements Serializable {
         
         if (obj instanceof ClientePessoa) {
             ClientePessoa pessoa = (ClientePessoa) obj;
-            return pessoa.getId() == this.id;
+            return pessoa.getNome().equals(this.nome) && pessoa.getDocumento().equals(this.documento) && pessoa.getTipoPessoa().equals(this.tipoPessoa);
         }
         
         return false;

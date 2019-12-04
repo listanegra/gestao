@@ -40,7 +40,7 @@ public final class CadastroProdutoController extends DialogCadastroBase<Produto>
             return false;
         }
         
-        if (this.exists(e -> e.getNome().equals(produto.getNome()) && e.getMarca().equals(produto.getMarca()))) {
+        if (this.contains(produto)) {
             this.alert("Produto já cadastrado!");
             return false;
         }
