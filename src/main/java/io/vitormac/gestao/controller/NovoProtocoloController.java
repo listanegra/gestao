@@ -26,13 +26,13 @@ public class NovoProtocoloController extends DialogCadastroBase<Reclamacao> impl
 
     @FXML
     private TextArea txtDescricao;
-    
+
     @FXML
     private ComboBox<ClientePessoa> cbClientes;
 
     @FXML
     private ComboBox<Produto> cbProdutos;
-    
+
     @FXML
     private ComboBox<Reclamacao.Prioridade> cbPrioridade;
 
@@ -40,17 +40,17 @@ public class NovoProtocoloController extends DialogCadastroBase<Reclamacao> impl
     public void initialize(URL location, ResourceBundle resources) {
         List<ClientePessoa> clientes = manager.createNamedQuery("Cliente.listarClientes", ClientePessoa.class).getResultList();
         this.cbClientes.setItems(FXCollections.observableArrayList(clientes));
-        
+
         List<Produto> produtos = manager.createNamedQuery("Produto.listarProdutos", Produto.class).getResultList();
         this.cbProdutos.setItems(FXCollections.observableArrayList(produtos));
-        
+
         this.cbPrioridade.setItems(FXCollections.observableArrayList(Reclamacao.Prioridade.values()));
     }
 
     @FXML
     @Override
     protected void action(ActionEvent event) {
-        this.doAction(new Reclamacao(this.txtDescricao.getText(), this.cbClientes.getValue(), 
+        this.doAction(new Reclamacao(this.txtDescricao.getText(), this.cbClientes.getValue(),
                 this.cbProdutos.getValue(), this.cbPrioridade.getValue()), event);
     }
 
@@ -60,12 +60,12 @@ public class NovoProtocoloController extends DialogCadastroBase<Reclamacao> impl
             this.alert("Forneça uma descrição para o problema!");
             return false;
         }
-        
+
         if (reclamacao.getCliente() == null) {
             this.alert("Selecione um cliente!");
             return false;
         }
-        
+
         if (reclamacao.getProduto() == null) {
             this.alert("Selecione um produto!");
             return false;
@@ -75,7 +75,14 @@ public class NovoProtocoloController extends DialogCadastroBase<Reclamacao> impl
             this.alert("Selecione uma prioridade!");
             return false;
         }
-        
+
+        if (this.exists(e -> e.getCliente().equals(reclamacao.getCliente())
+                && e.getProduto().equals(reclamacao.getProduto())
+                && e.getStatus().equals(Reclamacao.Status.PENDENTE))) {
+            this.alert(String.format("Já existe um protocolo pendente para o cliente %s!", reclamacao.getCliente().getNome()));
+            return false;
+        }
+
         return true;
     }
 

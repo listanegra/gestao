@@ -80,4 +80,25 @@ public class Produto implements Serializable {
         return String.format("%s - Marca: %s", this.nome, this.marca);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj instanceof Produto) {
+            Produto produto = (Produto) obj;
+            return produto.getId() == this.id;
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + this.id;
+        return hash;
+    }
+
 }

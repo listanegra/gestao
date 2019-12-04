@@ -99,6 +99,27 @@ public abstract class ClientePessoa implements Serializable {
     public final String toString() {
         return String.format("%s - Documento: %s", this.getNome(), this.formatarDocumento());
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        
+        if (obj instanceof ClientePessoa) {
+            ClientePessoa pessoa = (ClientePessoa) obj;
+            return pessoa.getId() == this.id;
+        }
+        
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + this.id;
+        return hash;
+    }
 
     public enum TipoPessoa {
 
