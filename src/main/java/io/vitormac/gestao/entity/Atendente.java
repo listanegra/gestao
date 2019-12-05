@@ -1,12 +1,10 @@
-package io.vitormac.gestao.model;
+package io.vitormac.gestao.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 
 /**
  *
@@ -21,6 +19,10 @@ public class Atendente implements Serializable {
     private int id;
 
     private String nome, token;
+
+    @ElementCollection
+    @OneToMany(mappedBy = "atendente")
+    private List<Reclamacao> reclamacoes = new ArrayList<>();
 
     public Atendente() {
     }
@@ -53,7 +55,19 @@ public class Atendente implements Serializable {
     public void setToken(String token) {
         this.token = token;
     }
-    
+
+    public void set(Atendente atendente) {
+        this.id = atendente.id;
+        this.nome = atendente.nome;
+        this.token = atendente.token;
+        this.reclamacoes.addAll(atendente.reclamacoes);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s - %s", this.nome, this.id);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -66,6 +80,14 @@ public class Atendente implements Serializable {
         }
         
         return false;
+    }
+
+    public List<Reclamacao> getReclamacoes() {
+        return reclamacoes;
+    }
+
+    public void setReclamacoes(List<Reclamacao> reclamacoes) {
+        this.reclamacoes = reclamacoes;
     }
 
 }

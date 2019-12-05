@@ -1,7 +1,7 @@
 package io.vitormac.gestao.controller;
 
 import io.vitormac.gestao.controller.model.DialogCadastroBase;
-import io.vitormac.gestao.model.Produto;
+import io.vitormac.gestao.entity.Produto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;

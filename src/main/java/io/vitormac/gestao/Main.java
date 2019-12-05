@@ -1,7 +1,7 @@
 package io.vitormac.gestao;
 
 import io.vitormac.gestao.controller.GestaoReclamacoesController;
-import io.vitormac.gestao.model.Atendente;
+import io.vitormac.gestao.entity.Atendente;
 import io.vitormac.gestao.utils.DatabaseManager;
 import io.vitormac.gestao.utils.SceneUtils;
 import java.util.List;

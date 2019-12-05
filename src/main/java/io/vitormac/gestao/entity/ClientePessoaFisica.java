@@ -1,4 +1,4 @@
-package io.vitormac.gestao.model;
+package io.vitormac.gestao.entity;
 
 import javax.persistence.Entity;
 

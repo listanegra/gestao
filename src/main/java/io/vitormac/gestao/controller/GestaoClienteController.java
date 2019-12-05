@@ -1,7 +1,7 @@
 package io.vitormac.gestao.controller;
 
 import io.vitormac.gestao.controller.model.GestaoControllerBase;
-import io.vitormac.gestao.model.ClientePessoa;
+import io.vitormac.gestao.entity.ClientePessoa;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -24,13 +24,13 @@ import javafx.util.StringConverter;
 public class GestaoClienteController extends GestaoControllerBase {
 
     @FXML
-    private TableColumn nomeCol;
+    private TableColumn<ClientePessoa, String> nomeCol;
 
     @FXML
-    private TableColumn documentoCol;
+    private TableColumn<ClientePessoa, String> documentoCol;
 
     @FXML
-    private TableColumn tipoPessoaCol;
+    private TableColumn<ClientePessoa, ClientePessoa.TipoPessoa> tipoPessoaCol;
 
     @FXML
     private TableView<ClientePessoa> tableClientes;
@@ -78,16 +78,16 @@ public class GestaoClienteController extends GestaoControllerBase {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.nomeCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        this.nomeCol.setCellValueFactory(new PropertyValueFactory("nome"));
+        this.nomeCol.setCellValueFactory(new PropertyValueFactory<>("nome"));
         this.documentoCol.setCellFactory(TextFieldTableCell.forTableColumn(new DocumentoConverter()));
-        this.documentoCol.setCellValueFactory(new PropertyValueFactory("documento"));
-        this.tipoPessoaCol.setCellValueFactory(new PropertyValueFactory("tipoPessoa"));
+        this.documentoCol.setCellValueFactory(new PropertyValueFactory<>("documento"));
+        this.tipoPessoaCol.setCellValueFactory(new PropertyValueFactory<>("tipoPessoa"));
 
         List<ClientePessoa> clientes = this.consultar("Cliente.listarClientes", ClientePessoa.class);
         this.tableClientes.setItems(FXCollections.observableArrayList(clientes));
     }
 
-    private class DocumentoConverter extends StringConverter<String> {
+    private static class DocumentoConverter extends StringConverter<String> {
 
         @Override
         public String toString(String object) {

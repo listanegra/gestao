@@ -1,4 +1,4 @@
-package io.vitormac.gestao.model;
+package io.vitormac.gestao.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class Produto implements Serializable {
 
     @ElementCollection
     @OneToMany(mappedBy = "produto")
-    public List<Reclamacao> reclamacoes = new ArrayList<>();
+    private List<Reclamacao> reclamacoes = new ArrayList<>();
 
     public Produto() {
     }
@@ -99,6 +99,14 @@ public class Produto implements Serializable {
         int hash = 5;
         hash = 29 * hash + this.id;
         return hash;
+    }
+
+    public List<Reclamacao> getReclamacoes() {
+        return reclamacoes;
+    }
+
+    public void setReclamacoes(List<Reclamacao> reclamacoes) {
+        this.reclamacoes = reclamacoes;
     }
 
 }

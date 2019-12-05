@@ -1,5 +1,6 @@
 package io.vitormac.gestao.controller.model;
 
+import io.vitormac.gestao.entity.Atendente;
 import io.vitormac.gestao.utils.DatabaseManager;
 import io.vitormac.gestao.utils.SceneUtils;
 import java.io.IOException;
@@ -77,10 +78,7 @@ public abstract class GestaoControllerBase implements IGestaoController, Initial
         controller.loadItems(items);
 
         stage.showAndWait();
-        controller.get().ifPresent(item -> {
-            this.persistidos.add(item);
-            this.pendente = true;
-        });
+        controller.get().ifPresent(this::incluirItem);
 
         return controller.get();
     }
@@ -100,8 +98,10 @@ public abstract class GestaoControllerBase implements IGestaoController, Initial
     }
 
     protected <T extends Serializable> void incluirItem(T item) {
-        this.persistidos.add(item);
-        this.pendente = true;
+        if (!(item instanceof Atendente)) {
+            this.persistidos.add(item);
+            this.pendente = true;
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package io.vitormac.gestao.model;
+package io.vitormac.gestao.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public abstract class ClientePessoa implements Serializable {
 
     @ElementCollection
     @OneToMany(mappedBy = "cliente")
-    public List<Reclamacao> reclamacoes = new ArrayList<>();
+    private List<Reclamacao> reclamacoes = new ArrayList<>();
 
     protected ClientePessoa() {
     }
@@ -120,9 +120,17 @@ public abstract class ClientePessoa implements Serializable {
         return hash;
     }
 
+    public List<Reclamacao> getReclamacoes() {
+        return reclamacoes;
+    }
+
+    public void setReclamacoes(List<Reclamacao> reclamacoes) {
+        this.reclamacoes = reclamacoes;
+    }
+
     public enum TipoPessoa {
 
-        FISICA, JURIDICA;
+        FISICA, JURIDICA
 
     }
 

@@ -9,10 +9,10 @@ import javafx.stage.WindowEvent;
  */
 public interface IGestaoController {
     
-    public void confirmaAlteracao(WindowEvent event);
+    void confirmaAlteracao(WindowEvent event);
     
-    public void incluir(ActionEvent event) throws Exception;
+    void incluir(ActionEvent event) throws Exception;
     
-    public void excluir(ActionEvent event);
+    void excluir(ActionEvent event);
     
 }

@@ -1,4 +1,4 @@
-package io.vitormac.gestao.model;
+package io.vitormac.gestao.entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -32,6 +32,10 @@ public class Reclamacao implements Serializable {
     @JoinColumn(name = "produto_id")
     private Produto produto;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "atendente_id")
+    private Atendente atendente;
+
     private Prioridade prioridade;
     private Status status;
 
@@ -39,10 +43,11 @@ public class Reclamacao implements Serializable {
 
     }
 
-    public Reclamacao(String descricao, ClientePessoa cliente, Produto produto, Prioridade prioridade) {
+    public Reclamacao(String descricao, ClientePessoa cliente, Produto produto, Atendente atendente, Prioridade prioridade) {
         this.descricao = descricao;
         this.cliente = cliente;
         this.produto = produto;
+        this.atendente = atendente;
         this.prioridade = prioridade;
         this.status = Status.PENDENTE;
     }
@@ -71,6 +76,14 @@ public class Reclamacao implements Serializable {
         this.cliente = cliente;
     }
 
+    public Atendente getAtendente() {
+        return atendente;
+    }
+
+    public void setAtendente(Atendente atendente) {
+        this.atendente = atendente;
+    }
+
     public Produto getProduto() {
         return produto;
     }
@@ -95,15 +108,20 @@ public class Reclamacao implements Serializable {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return String.format("#%d - %s", this.protocolo, this.descricao);
+    }
+
     public enum Prioridade {
 
-        BAIXA, MEDIA, ALTA, URGENTE;
+        BAIXA, MEDIA, ALTA, URGENTE
 
     }
 
     public enum Status {
 
-        ENCERRADO, RESOLVIDO, PENDENTE;
+        ENCERRADO, RESOLVIDO, PENDENTE
 
     }
 

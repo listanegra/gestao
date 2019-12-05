@@ -2,9 +2,9 @@ package io.vitormac.gestao.controller;
 
 import io.vitormac.gestao.controller.model.DialogCadastroBase;
 import io.vitormac.gestao.utils.DatabaseManager;
-import io.vitormac.gestao.model.ClientePessoa;
-import io.vitormac.gestao.model.Produto;
-import io.vitormac.gestao.model.Reclamacao;
+import io.vitormac.gestao.entity.ClientePessoa;
+import io.vitormac.gestao.entity.Produto;
+import io.vitormac.gestao.entity.Reclamacao;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -51,7 +51,7 @@ public class NovoProtocoloController extends DialogCadastroBase<Reclamacao> impl
     @Override
     protected void action(ActionEvent event) {
         this.doAction(new Reclamacao(this.txtDescricao.getText(), this.cbClientes.getValue(),
-                this.cbProdutos.getValue(), this.cbPrioridade.getValue()), event);
+                this.cbProdutos.getValue(), GestaoReclamacoesController.atendente(), this.cbPrioridade.getValue()), event);
     }
 
     @Override

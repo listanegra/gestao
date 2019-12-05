@@ -37,7 +37,7 @@ public abstract class DialogCadastroBase<T extends Serializable> {
     }
     
     protected final boolean exists(Predicate<? super T> predicate) {
-        return this.items.stream().filter(predicate).findAny().isPresent();
+        return this.items.stream().anyMatch(predicate);
     }
 
     protected final void alert(String text) {

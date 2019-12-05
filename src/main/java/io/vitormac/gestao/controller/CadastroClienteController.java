@@ -1,9 +1,9 @@
 package io.vitormac.gestao.controller;
 
 import io.vitormac.gestao.controller.model.DialogCadastroBase;
-import io.vitormac.gestao.model.ClientePessoa;
-import io.vitormac.gestao.model.ClientePessoaFisica;
-import io.vitormac.gestao.model.ClientePessoaJuridica;
+import io.vitormac.gestao.entity.ClientePessoa;
+import io.vitormac.gestao.entity.ClientePessoaFisica;
+import io.vitormac.gestao.entity.ClientePessoaJuridica;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;

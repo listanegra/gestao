@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  */
 public class SceneUtils {
 
-    public static FXMLLoader getLoader(String name) throws IOException {
+    public static FXMLLoader getLoader(String name) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(SceneUtils.class.getResource(String.format("/views/%s.fxml", name)));
         return loader;
