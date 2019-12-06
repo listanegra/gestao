@@ -7,13 +7,16 @@ import io.vitormac.gestao.entity.ClientePessoa;
 import io.vitormac.gestao.entity.Produto;
 import io.vitormac.gestao.entity.Reclamacao;
 import io.vitormac.gestao.utils.SceneUtils;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -21,10 +24,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
- *
  * @author vitor
  */
 public class GestaoReclamacoesController extends GestaoControllerBase {
@@ -73,8 +76,13 @@ public class GestaoReclamacoesController extends GestaoControllerBase {
     }
 
     @FXML
-    private void exibirDetalhes(ActionEvent event) {
-
+    private void exibirDetalhes(ActionEvent event) throws IOException {
+        Reclamacao reclamacao = this.tabelaReclamacoes.getSelectionModel().getSelectedItem();
+        FXMLLoader loader = SceneUtils.getLoader("detalhes_protocolo");
+        Stage stage = SceneUtils.createDialog(SceneUtils.loadScene(loader), String.format("Detalhes do protocolo #%d", reclamacao.getProtocolo()));
+        DetalhesReclamacaoController controller = loader.getController();
+        controller.setDescricao(reclamacao.getDescricao());
+        stage.showAndWait();
     }
 
     @FXML
@@ -94,6 +102,8 @@ public class GestaoReclamacoesController extends GestaoControllerBase {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.listaProtocolos.setMouseTransparent(true);
+        this.listaProtocolos.setFocusTraversable(false);
         this.protocoloCol.setCellValueFactory(new PropertyValueFactory<>("protocolo"));
         this.clienteCol.setCellValueFactory(new PropertyValueFactory<>("cliente"));
         this.produtoCol.setCellValueFactory(new PropertyValueFactory<>("produto"));
@@ -103,6 +113,9 @@ public class GestaoReclamacoesController extends GestaoControllerBase {
 
         List<Reclamacao> clientes = this.consultar("Reclamacao.listarReclamacoes", Reclamacao.class);
         this.tabelaReclamacoes.setItems(FXCollections.observableArrayList(clientes));
+        this.tabelaReclamacoes.getSelectionModel().selectedItemProperty().addListener((o, a, b) -> {
+            if (b != null) this.btnExibirDetalhes.setDisable(false);
+        });
     }
 
     private Stage criarDialogGestao(String name, String title) throws IOException {
